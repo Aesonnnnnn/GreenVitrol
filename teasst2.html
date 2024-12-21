@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+    <meta name="description" content="Enter patient details for Green Vitrol's healthcare platform.">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 1rem;
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+        }
+        nav {
+            background: #333;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 2rem;
+            background: white;
+            margin: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        input, textarea, select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <b>Green Vitrol - Patient Details</b>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="team.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="patient.html">Patient Matching</a>
+        <a href="aeson.html">Doctor Search</a>
+    </nav>
+    <main>
+        <h1>Enter Patient Details</h1>
+        <div class="form-container">
+            <form id="patientForm">
+                <div class="form-group">
+                    <label for="name">Patient Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" placeholder="Enter age" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact Number</label>
+                    <input type="tel" id="contact" name="contact" placeholder="Enter contact number" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter email address" required>
+                </div>
+                <div class="form-group">
+                    <label for="hospital">Name Of Hospital</label>
+                    <textarea id="hospital" name="hospital" rows="2" placeholder="Enter hospital name" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="doctor">Name of the Doctor</label>
+                    <textarea id="doctor" name="doctor" rows="2" placeholder="Enter doctor name" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="4" placeholder="Enter address" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="condition">Medical Condition</label>
+                    <textarea id="condition" name="condition" rows="4" placeholder="Brief description of the condition"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="button" onclick="matchPatient()">Match</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="matchResult" class="message"></div>
+        
+        <!-- Add the table for displaying matched patients -->
+        <table id="patientTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Hospital</th>
+                    <th>Doctor</th>
+                    <th>Address</th>
+                    <th>Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        
+    </main>
+    <footer>
+        &copy; 2024 Green Vitrol. All Rights Reserved.
+    </footer>
+
+    <script>
+        const patientsData = [
+            { name: 'Alex Green', age: 45, gender: 'Male', contact: '900000000', email: 'alex312@gmail.com', hospital: 'Vaccity Hospital', doctor: 'Dr. Alice Smith', address: 'Tokyo, Japan', condition: 'Chest Pain' },
+            { name: 'Emily White', age: 10, gender: 'Female', contact: '+1-555-456-7890', email: 'emily.white@example.com', hospital: "Children's Medical Center", doctor: 'Dr. Cathy Lee', address: '789 Oak St, Suburbia, ST 34567', condition: 'Fever' },
+            { name: 'Chris Adams', age: 32, gender: 'Male', contact: '+1-555-567-8901', email: 'chris.adams@example.com', hospital: 'Skin Care Clinic', doctor: 'Dr. Bob Brown', address: '456 Elm St, Townsville, ST 23456', condition: 'Acne Issues' },
+            { name: 'Sophia King', age: 60, gender: 'Female', contact: '+1-555-678-9012', email: 'sophia.king@example.com', hospital: 'City Heart Hospital', doctor: 'Dr. Alice Smith', address: '123 Main St, Cityville, ST 12345', condition: 'Palpitations' },
+            { name: 'Liam Scott', age: 8, gender: 'Male', contact: '+1-555-789-0123', email: 'liam.scott@example.com', hospital: "Children's Medical Center", doctor: 'Dr. Cathy Lee', address: '789 Oak St, Suburbia, ST 34567', condition: 'Cough and Cold' },
+            { name: 'Alex Green', age: 50, gender: 'Male', contact: '+1-555-345-6789', email: 'alex.green@example.com', hospital: 'City Heart Hospital', doctor: 'Dr. Alice Smith', address: '123 Main St, Cityville, ST 12345', condition: 'High Blood Pressure' },
+            { name: 'John Doe', age: 45, gender: 'Male', contact: '+1-555-123-4567', email: 'john.doe@example.com', hospital: 'City Heart Hospital', doctor: 'Dr. Alice Smith', address: '23 Main St, Cityville, ST 12345', condition: 'Chest Pain' }
+        ];
+
+        function matchPatient() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const match = patientsData.filter(patient => patient.name === name && patient.age == age);
+            
+            const resultDiv = document.getElementById('matchResult');
+            const tableBody = document.getElementById('patientTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = '';
+
+            if (match.length > 0) {
+                resultDiv.textContent = 'Matching patient(s) found:';
+                match.forEach(patient => {
+                    const row = tableBody.insertRow();
+                    Object.values(patient).forEach(value => {
+                        const cell = row.insertCell();
+                        cell.textContent = value;
+                    });
+                });
+            } else {
+                resultDiv.textContent = 'No matches found.';
+            }
+        }
+    </script>
+</body>
+</html>
